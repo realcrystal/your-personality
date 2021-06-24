@@ -1,6 +1,9 @@
 #qna {
-  width: 80%;
   display: none;
+}
+
+.qnaBox {
+  width: 80%;
   background-color: whitesmoke;
   text-align: center;
   border-radius: 20px;
@@ -21,4 +24,17 @@
 
 .answerList:hover, .answerList:focus {
   background-color: lavender;
+}
+
+.status {
+  width: 80%;
+  height: 10px;
+  background-color: grey;
+  border-radius: 10px;
+}
+
+.statusBar {
+  height: 100%;
+  background-color: lavender;
+  border-radius: 10px;
 }
