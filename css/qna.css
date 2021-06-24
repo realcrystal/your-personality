@@ -1,4 +1,24 @@
 #qna {
+  width: 80%;
   display: none;
+  background-color: whitesmoke;
   text-align: center;
+  border-radius: 20px;
+}
+
+.qBox {
+  font-size: 24px;
+}
+
+.answerList {
+  display: block;
+  margin: 20px auto 10px auto;
+  padding: 5px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.answerList:hover, .answerList:focus {
+  background-color: lavender;
 }

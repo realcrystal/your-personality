@@ -6,15 +6,22 @@ function addAnswer(answerText, qIdx){
   var a = document.querySelector(".aBox");
   var answer = document.createElement("button");
   answer.classList.add("answerList");
-  a.appendChild(answer);
+  answer.classList.add("fadeIn");
   answer.innerHTML = answerText;
+  a.appendChild(answer);
   answer.addEventListener("click", function(){
     var children = document.querySelectorAll(".answerList");
     for(let i = 0; i < children.length; i++){
       children[i].disabled = true;
-      children[i].style.display = "none";
+      children[i].style.WebkitAnimation = "fadeOut 0.5s";
+      children[i].style.animation = "fadeOut 0.5s";
     }
-    if(qIdx < 11) goNext(++qIdx);
+    setTimeout(() => {
+      for(let i = 0; i < children.length; i++){
+        children[i].style.display = "none";
+      }
+      goNext(++qIdx);
+    }, 200);
   }, false);
 }
 
