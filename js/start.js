@@ -3,6 +3,19 @@ const qna = document.querySelector("#qna");
 const result = document.querySelector("#result");
 const endPoint = 12;
 
+function goResult(){
+  qna.style.WebkitAnimation = "fadeOut 0.5s";
+  qna.style.animation = "fadeOut 0.5s";
+  setTimeout(() => {
+    result.style.WebkitAnimation = "fadeIn 0.5s";
+    result.style.animation = "fadeIn 0.5s";
+    setTimeout(() => {
+      qna.style.display = "none";
+      result.style.display = "block";
+    }, 200);
+  }, 200);
+}
+
 function addAnswer(answerText, qIdx){
   var a = document.querySelector(".aBox");
   var answer = document.createElement("button");
@@ -27,13 +40,18 @@ function addAnswer(answerText, qIdx){
 }
 
 function goNext(qIdx){
+  console.log(qIdx);
+  if(qIdx === endPoint){
+    goResult();
+    return;
+  }
   var q = document.querySelector(".qBox");
   q.innerHTML = qnaList[qIdx].q;
   for(let i in qnaList[qIdx].a){
     addAnswer(qnaList[qIdx].a[i].answer, qIdx);
   }
   var status = document.querySelector(".statusBar");
-  status.style.width = (100/endPoint) * (qIdx+1) + "%";
+  status.style.width = (100/endPoint) * (qIdx) + "%";
 }
 
 function begin(){
