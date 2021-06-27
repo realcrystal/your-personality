@@ -2,95 +2,17 @@ const main = document.querySelector("#main");
 const qna = document.querySelector("#qna");
 const result = document.querySelector("#result");
 const endPoint = 12;
-const select = [];
+const select = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 function calcResult() {
-  var pointArray = [{
-      name: 'mouse',
-      value: 0,
-      key: 0
-    },
-    {
-      name: 'cow',
-      value: 0,
-      key: 1
-    },
-    {
-      name: 'tiger',
-      value: 0,
-      key: 2
-    },
-    {
-      name: 'rabbit',
-      value: 0,
-      key: 3
-    },
-    {
-      name: 'dragon',
-      value: 0,
-      key: 4
-    },
-    {
-      name: 'snake',
-      value: 0,
-      key: 5
-    },
-    {
-      name: 'horse',
-      value: 0,
-      key: 6
-    },
-    {
-      name: 'sheep',
-      value: 0,
-      key: 7
-    },
-    {
-      name: 'monkey',
-      value: 0,
-      key: 8
-    },
-    {
-      name: 'chick',
-      value: 0,
-      key: 9
-    },
-    {
-      name: 'dog',
-      value: 0,
-      key: 10
-    },
-    {
-      name: 'pig',
-      value: 0,
-      key: 11
-    }
-  ];
+  console.log(select);
+  var result = select.indexOf(Math.max(...select));
+  return result;
+}
 
-  for (let i = 0; i < endPoint; i++) {
-    var target = qnaList[i].a[select[i]]
-    for (let j = 0; j < target.type.length; j++) {
-      for (let k = 0; k < pointArray.length; k++) {
-        if (target.type[j] === pointArray[k].name) {
-          pointArray[k].value++;
-        }
-      }
-    }
-  }
-
-  var resultArray = pointArray.sort(function(a, b) {
-    if (a.value > b.value) {
-      return -1;
-    }
-    if (a.value < b.value) {
-      return 1;
-    }
-    return 0;
-  });
-
-  let resultWord = resultArray[0].key;
-  console.log(resultArray);
-  return resultWord;
+function setResult(){
+  let point = calcResult();
+  console.log(point);
 }
 
 function goResult() {
@@ -104,7 +26,7 @@ function goResult() {
       result.style.display = "block";
     }, 200);
   }, 200);
-  calcResult();
+  setResult();
 }
 
 function addAnswer(answerText, qIdx, idx) {
@@ -117,14 +39,20 @@ function addAnswer(answerText, qIdx, idx) {
   answer.addEventListener("click", function() {
     var children = document.querySelectorAll(".answerList");
     for (let i = 0; i < children.length; i++) {
+      // 모든 버튼 클릭 안 되도록 설정 & 애니메이션 효과
       children[i].disabled = true;
       children[i].style.WebkitAnimation = "fadeOut 0.5s";
       children[i].style.animation = "fadeOut 0.5s";
     }
     setTimeout(() => {
-      select[qIdx] = idx;
-      for (let i = 0; i < children.length; i++) {
-        children[i].style.display = "none";
+      var target = qnaList[qIdx].a[idx].type;
+      for (let j = 0; j < target.length; j++){
+        // 선택한 답변에 해당하는 유형의 값을 증가시킴
+        select[target[j]]++;
+      }
+      for (let k = 0; k < children.length; k++) {
+        // 모든 버튼을 보이지 않도록 설정
+        children[k].style.display = "none";
       }
       goNext(++qIdx);
     }, 200);
@@ -132,7 +60,6 @@ function addAnswer(answerText, qIdx, idx) {
 }
 
 function goNext(qIdx) {
-  console.log(qIdx);
   if (qIdx === endPoint) {
     goResult();
     return;
